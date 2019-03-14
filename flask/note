@@ -1,0 +1,60 @@
+# @app.route('/members/<string:id>', methods=['PUT'])
+# def addOne():
+#   conn = mysql.connect()
+#   cursor = conn.cursor()
+
+#   cursor.execute(
+#     "SELECT id,firstName, lastName, reason_for_payment, amount, payment_months, todaydate, received_by, invoice from membersForm;")
+#   returnData = []
+#   data = cursor.fetchone()
+#   for info in data:
+#       info[0]['id']= request.json['id']
+#       userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3], "amount": info[4],
+#                   "payment_months": info[5], "todaydate": info[6], "received_by": info[7], "invoice": info[8]}
+#       returnData.append({'member': info[0]})
+#       info = [member for member in info if member['id']== id]
+
+#      # it has to be out of the loop
+#   jsonResult = json.dumps(returnData, indent=4, sort_keys=True, default=str)
+#   return Response(jsonResult, mimetype='application/json')
+
+# @app.errorhandler(404)
+# def not_found(error=None):
+#     message = {
+#             'status': 404,
+#             'message': 'Not Found: ' + request.url,
+#     }
+#     resp = json.dumps(message)
+#     resp.status_code = 404
+
+#     return resp
+
+# @app.route('/members/<userid>', methods = ['GET'])
+# def api_users(member_id):
+#   conn = mysql.connect()
+#   cursor = conn.cursor()
+
+#   cursor.execute(
+#     "SELECT id,firstName, lastName, reason_for_payment, amount, payment_months, todaydate, received_by, invoice from membersForm;") 
+#   returnData = []
+#   data = cursor.fetchone()
+#   for info in data:
+#     print(info)
+#     userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3], "amount": info[4],
+#                   "payment_months": info[5], "todaydate": info[6], "received_by": info[7], "invoice": info[8]}
+#     returnData.append(userObject)
+
+#     if member_id in userObject:
+#         # return jsonify({member_id:members[member_id]})
+#         jsonResult = json.dumps(returnData, indent=4, sort_keys=True, default=str)
+#         return Response(jsonResult, mimetype='application/json')
+#     else:
+#         return not_found()
+
+
+
+
+# @app.route('/post/<int:post_id>')
+# def show_post(post_id):
+#     # show the post with the given id, the id is an integer
+#     return 'Post %d' % post_id
