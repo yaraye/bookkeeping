@@ -41,10 +41,10 @@ def verifyPasswords(password, dbpassword):
 
 # connection to mysql
 mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Newlife7'
-app.config['MYSQL_DATABASE_DB'] = 'members'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = 'ij91f0jukbae09xk'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'pk4xuinen7yv9lb9'
+app.config['MYSQL_DATABASE_DB'] = 'ht66ljw9uboq83ce'
+app.config['MYSQL_DATABASE_HOST'] = 'zj2x67aktl2o6q2n.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
 mysql.init_app(app)
 
 
@@ -53,10 +53,10 @@ def getOne(id):
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT id, firstName, lastName, reason_for_payment, payment_months, amount, invoice, todaydate, received_by FROM membersForm WHERE id=%s", [id])
+        "SELECT id, firstName, lastName, reason_for_payment, other, payment_months, amount, payment_method, invoice, todaydate, received_by FROM membersForm WHERE id=%s", [id])
     data = cursor.fetchone () 
-    memberObject = {"id":data[0], "first_name": data[1], "last_name": data[2], "reason": data[3],  "payment_months": data[4],
-                     "amount": data[5], "invoice": data[6],  "todaydate": data[7],  "received_by": data[8]}
+    memberObject = {"id":data[0], "first_name": data[1], "last_name": data[2], "reason": data[3], "other": data[4],  "payment_months": data[5],
+                     "amount": data[6], "payment_method": data[7], "invoice": data[8],  "todaydate": data[9],  "received_by": data[10]}
     jsonResult = json.dumps(memberObject, indent=4, sort_keys=True, default=str)
     return Response(jsonResult, mimetype='application/json')
 
@@ -65,12 +65,12 @@ def membersLists():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT id, firstName, lastName, reason_for_payment, payment_months, amount, invoice, todaydate, received_by from membersForm")
+        "SELECT id, firstName, lastName, reason_for_payment, other, payment_months, amount, payment_method, invoice, todaydate, received_by from membersForm")
     returnData = []
     data = cursor.fetchall()
     for info in data:
-        userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3],  "payment_months": info[4],
-                     "amount": info[5], "invoice": info[6],  "todaydate": info[7],  "received_by": info[8]}
+        userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3], "other": info[4], "payment_months": info[5],
+                     "amount": info[6], "payment_method": info[7], "invoice": info[8],  "todaydate": info[9],  "received_by": info[10]}
         returnData.append(userObject)
     # it has to be out of the loop
     jsonResult = json.dumps(returnData, indent=4, sort_keys=True, default=str)
@@ -88,7 +88,9 @@ def membersUpdate(id_data):
     firstName = data_members.get('first_name', 'firstName')
     lastName = data_members.get('last_name', 'lastName')
     reason_for_payment = data_members.get('reason', 'reason')
+    other = data_members.get('other', 'other')
     amount = data_members.get('amount', 'amount')
+    payment_method = data_members.get('payment_method', 'payment_method')
     invoice = data_members.get('invoice', 'invoice')
     payment_months = data_members.get('payment_months', 'payment_months')
     todaydate = datetime.datetime.today().strftime('%Y-%m-%d')
@@ -96,9 +98,9 @@ def membersUpdate(id_data):
     
     cursor.execute("""
     UPDATE membersForm
-    SET firstName=%s, lastName=%s, reason_for_payment=%s, amount=%s, invoice=%s, payment_months=%s, todaydate=%s, received_by = %s
+    SET firstName=%s, lastName=%s, reason_for_payment=%s, other=%s, amount=%s, payment_method=%s, invoice=%s, payment_months=%s, todaydate=%s, received_by = %s
     WHERE id=%s
-    """,(firstName, lastName, reason_for_payment, amount, invoice, payment_months, todaydate, received_by, id_data ))
+    """,(firstName, lastName, reason_for_payment, other, amount, payment_method, invoice, payment_months, todaydate, received_by, id_data ))
     # flash ('Data Updated successfully')
     conn.commit()
     return Response(json.dumps({"status": True}), mimetype='application/json')
@@ -119,12 +121,12 @@ def building():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT id, firstName, lastName, reason_for_payment, payment_months, amount, invoice, todaydate, received_by from membersForm where reason_for_payment = 'building'")
+        "SELECT id, firstName, lastName, reason_for_payment, other, payment_months, amount, payment_method, invoice, todaydate, received_by from membersForm where reason_for_payment = 'building'")
     returnData = []
     data = cursor.fetchall()
     for info in data:
-        userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3],  "payment_months": info[4],
-                     "amount": info[5], "invoice": info[6],  "todaydate": info[7],  "received_by": info[8]}
+        userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3], "other": info[4], "payment_months": info[5],
+                     "amount": info[6], "payment_method": info[7], "invoice": info[8],  "todaydate": info[9],  "received_by": info[10]}
         returnData.append(userObject)
     # it has to be out of the loop
     jsonResult = json.dumps(returnData, indent=4, sort_keys=True, default=str)
@@ -135,12 +137,12 @@ def donation():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT id, firstName, lastName, reason_for_payment, payment_months, amount, invoice, todaydate, received_by from membersForm where reason_for_payment = 'donation'")
+        "SELECT id, firstName, lastName, reason_for_payment, other, payment_months, amount, payment_method, invoice, todaydate, received_by from membersForm where reason_for_payment = 'donation'")
     returnData = []
     data = cursor.fetchall()
     for info in data:
-        userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3],  "payment_months": info[4],
-                     "amount": info[5], "invoice": info[6],  "todaydate": info[7],  "received_by": info[8]}
+        userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3], "other": info[4], "payment_months": info[5],
+                     "amount": info[6], "payment_method": info[7], "invoice": info[8],  "todaydate": info[9],  "received_by": info[10]}
         returnData.append(userObject)
     # it has to be out of the loop
     jsonResult = json.dumps(returnData, indent=4, sort_keys=True, default=str)
@@ -151,12 +153,12 @@ def membership():
     conn = mysql.connect()
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT id, firstName, lastName, reason_for_payment, payment_months, amount, invoice, todaydate, received_by from membersForm where reason_for_payment = 'membership'")
+        "SELECT id, firstName, lastName, reason_for_payment, other, payment_months, amount, payment_method, invoice, todaydate, received_by from membersForm where reason_for_payment = 'membership'")
     returnData = []
     data = cursor.fetchall()
     for info in data:
-        userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3],  "payment_months": info[4],
-                     "amount": info[5], "invoice": info[6],  "todaydate": info[7],  "received_by": info[8]}
+        userObject = {"id":info[0], "firstName": info[1], "lastName": info[2], "reason_for_payment": info[3], "other": info[4], "payment_months": info[5],
+                     "amount": info[6], "payment_method": info[7], "invoice": info[8],  "todaydate": info[9],  "received_by": info[10]}
         returnData.append(userObject)
     # it has to be out of the loop
     jsonResult = json.dumps(returnData, indent=4, sort_keys=True, default=str)
@@ -174,7 +176,9 @@ def addMembers():
     firstName = data_members.get('first_name', None)
     lastName = data_members.get('last_name', None)
     reason_for_payment = data_members.get('reason', None)
+    other = data_members.get('other', None)
     amount = data_members.get('amount', None)
+    payment_method = data_members.get('payment_method', None)
     invoice = data_members.get('invoice', None)
     payment_months = data_members.get('payment_months', None)
     todaydate = data_members.get('todaydate', datetime.datetime.today().strftime('%Y-%m-%d'))
@@ -194,8 +198,8 @@ def addMembers():
     # try:
     print(todaydate)
     cursor.execute(
-        "INSERT INTO membersForm (firstName, lastName, reason_for_payment, payment_months, amount, invoice,  todaydate, received_by) VALUE (%s,%s,%s,%s,%s,%s,%s,%s)",
-        (firstName, lastName, reason_for_payment, payment_months, amount, invoice, todaydate, received_by))
+        "INSERT INTO membersForm (firstName, lastName, reason_for_payment, other, payment_months, amount, payment_method, invoice,  todaydate, received_by) VALUE (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+        (firstName, lastName, reason_for_payment, other, payment_months, amount, payment_method, invoice, todaydate, received_by))
     conn.commit()
     return Response(json.dumps({"status": True}), mimetype='application/json')
     # except Exception, e:

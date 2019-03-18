@@ -4,7 +4,7 @@
     <div class="form-row">
 
       <div class="form-group col-md-6">
-        <label for="firstName">First Name</label>
+        <label id="label" for="firstName">First Name</label>
         <!-- [ngClass]-is used when we apply the class based on condtion   -->
         <input class="form-control" 
         [ngClass]="{ 'is-invalid': first_name.invalid && first_name.dirty }"
@@ -13,49 +13,30 @@
               First Name is Required!
             </div>
       </div>
-      <div class="form-group col-md-6">
-        <label for="lastName">Last Name</label>
-        <input class="form-control is"  
-        [ngClass]="{ 'is-invalid': last_name.invalid && last_name.dirty }"
-        [(ngModel)]="memberData.last_name" #last_name="ngModel" name = "lastName" id="lastName" placeholder="Enter Last Name" required>
-        <div class="invalid-feedback">
-          Last Name is Required!
-        </div>
+  <div class="form-group col-md-6">
+    <label   id="label"  for="lastName">Last Name</label>
+      <input class="form-control is"  
+      [ngClass]="{ 'is-invalid': last_name.invalid && last_name.dirty }"
+      [(ngModel)]="memberData.last_name" #last_name="ngModel" name = "lastName" id="lastName" placeholder="Enter Last Name" required>
+      <div class="invalid-feedback">
+        Last Name is Required!
       </div>
-    </div>
-    <div class="form-group">
-      <label for="reasonArray">Reason</label>
-      <select [(ngModel)]="memberData.reason" #reason="ngModel" name = "reason" class="form-control" id = "reason">
-        <option *ngFor="let abc of reason_array">{{abc}}</option>
-      </select>
-        <div *ngIf="memberData.reason == 'other'">
-          <input [(ngModel)]="memberData.text" #reason="ngModel" type="text"  name = "text" class="form-control" id="text" required>
-        </div>
-        <div class="modal" tabindex="-1" role="dialog" *ngIf="memberData.reason == other">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <p>Please enter the reason(s).</p>
-                <input [(ngModel)]="memberData.reason" #reason="ngModel" name = "reason" class="form-control" id = "reason">
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-    
-    </div>
+  </div>
+</div>
 
 <div class="form-group">
-    <label for="payment_months">Payment Month(s)</label> 
+  <label  for="reasonArray">Reason</label>
+    <select [(ngModel)]="memberData.reason" #reason="ngModel" name = "reason" class="form-control" id = "reason">
+      <option *ngFor="let abc of reason_array">{{abc}}</option>
+    </select>
+  <br>
+    <div *ngIf="memberData.reason === 'other'">
+      <input [(ngModel)]="memberData.other" #reason="ngModel" type="text"  name = "other" class="form-control" id="other" required placeholder="Please enter the reason(s).">
+    </div>
+</div>
+
+<div class="form-group">
+    <label  for="payment_months">Payment Month(s)</label> 
     <div id = "payment_months">
         <angular2-multiselect [data]="dropdownList"  [(ngModel)]="memberData.payment_months" #payment_months="ngModel"  name="payment_months" class="form-control"  
         [settings]="dropdownSettings" 
@@ -63,8 +44,20 @@
         (onDeSelect)="OnItemDeSelect($event)"
         (onSelectAll)="onSelectAll($event)"
         (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
-    </div>    
+    </div> 
 </div>
+<!-- <div> -->
+    <!-- <select name="month" formControlName="monthName">
+        <option *ngFor="let month of months" [ngValue]="month">
+          {{month}}
+        </option>
+      </select>
+      <select name="year" formControlName="year">
+        <option *ngFor="let year of years" [ngValue]="year">
+          {{year}}
+        </option>
+    </select> -->
+<!-- </div> -->
 
     <!-- **********************************************************
  [ngClass]="{ 'is-invalid': amount.invalid && amount.dirty }" --to decide when to show the message
@@ -75,7 +68,7 @@
 
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="amount">Payment amount</label>
+        <label  id="label"  for="amount">Payment amount</label>
         <input 
         [ngClass]="{ 'is-invalid': amount.invalid && amount.dirty }"
          [(ngModel)]="memberData.amount" #amount="ngModel" type="number"  name = "amount" class="form-control" id="amount" required>
@@ -83,26 +76,30 @@
           Please input a valid dollar amount
         </div>
       </div>
-    </div>
-    <div class="form-row">
+  
         <div class="form-group col-md-6">
-          <label for="invoice">payment Method</label>
-          <!-- <input 
-           [(ngModel)]="memberData.payment_method" #payment_method="ngModel" type="text"  name = "payment_method" class="form-control" id="payment_method" required> -->
-           <div>
-              <input name="payment_method" ng-control="payment_method" type="radio" [value]="1"  [(ngModel)]="memberData.payment_method" > Cash<br/>
-              <input name="payment_method" ng-control="payment_method" type="radio" [value]="2" [(ngModel)]="memberData.payment_method" >Check<br/>
-          </div>
-        </div>
-        
-      </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="invoice">Invoice number</label>
+          <label  id="label"  for="invoice">Invoice number</label>
           <input 
            [(ngModel)]="memberData.invoice" #invoice="ngModel" type="number"  name = "invoice" class="form-control" id="invoice" required>    
         </div>
       </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+          <label  id="label"  for="invoice">Payment Method</label>
+          <!-- <input 
+           [(ngModel)]="memberData.payment_method" #payment_method="ngModel" type="text"  name = "payment_method" class="form-control" id="payment_method" required> -->
+           <div>
+              <input name="payment_method" ng-control="payment_method" type="radio" value="Cash"  [(ngModel)]="memberData.payment_method" > Cash<br/>
+              <div>
+              <input name="payment_method" ng-control="payment_method" type="radio" value="Check #" [(ngModel)]="memberData.payment_method" >Check<br/>
+              <input [(ngModel)]="memberData.payment_method" #payment_method="ngModel" type="text"  name = "payment_method" class="form-control" id="payment_method" required placeholder="Please enter the check number.">
+              </div>
+              
+          </div>
+        </div>
+        
+      </div>
+  
     <button  [disabled]="membersForm.invalid"  class="btn btn-primary" type="submit" (click)='handleSubmit()'>Submit</button>
   </form>
 </div>
@@ -133,6 +130,7 @@ novalidate #membersForm="ngForm"
                   <th> First Name </th>
                   <th> Last Name </th>
                   <th>Reason for Payment</th>
+                  <th>Reason</th>
                   <th>Payment Month(s)</th>
                   <th>Amount</th>
                   <th>Payment Method</th>
@@ -146,6 +144,7 @@ novalidate #membersForm="ngForm"
                     <td>{{memberData.first_name}}</td>
                     <td>{{memberData.last_name}}</td>
                     <td>{{memberData.reason}}</td>
+                    <td>{{memberData.other}}</td>
                     <td>{{showPaymentMonths(memberData.payment_months)}}</td>
                     <td>{{memberData.amount}}</td> 
                     <td>{{memberData.payment_method}}</td> 
@@ -162,3 +161,4 @@ novalidate #membersForm="ngForm"
     </div>
   </div>
 
+  

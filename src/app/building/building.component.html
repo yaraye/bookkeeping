@@ -1,35 +1,48 @@
 <div ng-controller="MyController" id='container'>
     <div class="jumbotron">
         <h1>Building</h1>
+        
     </div>
+    <div  class="form-group col-md-12"> 
+        <label for="search">Search existing Member by Name</label> 
+        <input [(ngModel)]= "txtFname" class="form-control" type="text" />
+        <div *ngFor="let item of searchedItem">
+            {{memberData.name}}
+         </div>
+        </div>
         <table sortable-table (sorted)="onSorted($event)" class="table table-bordered">
 
-          <thead>
-              <tr>
-                  <th> First Name </th>
-                  <th> Last Name </th>
-                  <th>Reason for Payment</th>
-                  <th>Payment Month(s)</th>
-                  <th>Amount</th>
-                  <th>Invoice number</th>
-                  <th>Date</th>
-                  <th>Received BY</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-          </thead>
-          <tbody *ngIf='membersData'>
-            <!-- pull Data only theData is available -->
-            <!-- memberData is an array--nbeed ngFor -->
-            <tr *ngFor='let member of membersData' >
-                <td>{{member.firstName}}</td>
-                <td>{{member.lastName}}</td>
-                <td>{{member.reason_for_payment}}</td>
-                <td>{{member.payment_months}}</td>
-                <td>{{member.amount}}</td>    
-                <td>{{member.invoice}}</td>       
-                <td>{{member.todaydate}}</td>
-                <td>{{member.received_by}}</td>  
+            <thead>
+                <tr>
+                    <th> first Name </th>
+                    <th> Last Name </th>
+                    <th>Reason for Payment</th>
+                    <th>Reason</th>
+                    <th>Payment Month(s)</th>
+                    <th>Amount</th>
+                    <th>Payment Method</th>
+                    <th>Invoice number</th>
+                    <th>Date</th>
+                    <th>Received BY</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngIf ='membersData'>
+              <!-- pull Data only theData is available -->
+              <!-- memberData is an array--nbeed ngFor -->
+              <tr *ngFor="let member of membersData | filter: txtFname">
+               
+                  <td>{{member.firstName}}</td>
+                  <td>{{member.lastName}}</td>
+                  <td>{{member.reason_for_payment}}</td>
+                  <td>{{member.other}}</td>
+                  <td>{{member.payment_months}}</td>
+                  <td>{{member.amount}}</td>   
+                  <td>{{member.payment_method}}</td> 
+                  <td>{{member.invoice}}</td>       
+                  <td>{{member.todaydate}}</td>
+                  <td>{{member.received_by}}</td>    
                                 
                 <td><span class="btn btn-primary btn-xs" (click)="edit(member.id)">
                     <span class="glyphicon glyphicon-pencil"></span>Edit</span>

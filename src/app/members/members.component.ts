@@ -15,27 +15,33 @@ memberData:any;
 reason_array:any;
 months_array:any;
 membersData:any;
+payment_method:any;
 dropdownList = [];
 selectedItems = [];
 dropdownSettings = {};
 
+months;
+years = [];
 
 
   constructor(private router:Router, private memberService: MembersService, private httpClient: HttpClient, 
     private authService: AuthenticationService) { 
   //  to display the options we need the reason_array
     this.reason_array = ['Building', 'Collection baskets', 'Donation', 'Membership', 'Tithe','other']
-
+  
    this.memberData= {
         first_name: '',
         last_name:'',
         reason:'', 
+        other:'',
         payment_months:'',
         amount : '',
+        payment_method: '',
         invoice: '',
         // todaydate = ''
         received_by :this.authService.getLoggedInUserData()['name']
     }
+    
     
      this.dropdownList = 
      [
@@ -121,9 +127,20 @@ handleSubmit() {
     console.log(err)
     alert('Error occurred');
   });
+}
 
 
-  
+getDates() {
+  var date = new Date();
+  var currentYear = date.getFullYear();
+
+  //set values for year dropdown
+  for (var i = 0; i <= 100; i++) {
+    this.years.push(currentYear + i);
+  }
+
+  //set values for month dropdown
+  this.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 }
 
 

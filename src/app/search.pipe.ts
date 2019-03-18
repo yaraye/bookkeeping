@@ -8,7 +8,11 @@ export class FilterPipe implements PipeTransform {
     if(!searchText) return items;
 searchText = searchText.toLowerCase();
 return items.filter( it => {
-      return it.firstName.toLowerCase().includes(searchText);
+      return it.firstName.toLowerCase().includes(searchText) || it.lastName.toLowerCase().includes(searchText)
     });
    }
 }
+
+
+
+// return item.Email.includes(term) || item.FirstName.includes(term) || item.LastName.includes(term);

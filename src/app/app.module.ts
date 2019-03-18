@@ -29,6 +29,9 @@ import { BuildingComponent } from './building/building.component';
 import { UpdateComponent } from './update/update.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 
+// import { MyTestApp } from './my-test-app';
+import { DatePickerModule } from 'date-picker-directive';
+
 
 
 
@@ -79,6 +82,8 @@ export function getAuthServiceConfigs() {
     JwtModule,
     AngularMultiSelectModule,
     ModalModule,
+    BrowserModule, 
+    DatePickerModule,
     NgxSmartModalModule.forRoot(),
     LocalStorageModule.withConfig({
       prefix:'angularProject',
@@ -95,4 +100,5 @@ export function getAuthServiceConfigs() {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
 
