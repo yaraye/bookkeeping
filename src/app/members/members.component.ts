@@ -14,6 +14,7 @@ export class MembersComponent implements OnInit {
 memberData:any;
 reason_array:any;
 months_array:any;
+year_array:any;
 membersData:any;
 payment_method:any;
 dropdownList = [];
@@ -28,36 +29,54 @@ years = [];
     private authService: AuthenticationService) { 
   //  to display the options we need the reason_array
     this.reason_array = ['Building', 'Collection baskets', 'Donation', 'Membership', 'Tithe','other']
-  
-   this.memberData= {
-        first_name: '',
-        last_name:'',
-        reason:'', 
-        other:'',
-        payment_months:'',
-        amount : '',
-        payment_method: '',
-        invoice: '',
-        // todaydate = ''
-        received_by :this.authService.getLoggedInUserData()['name']
-    }
+    this.year_array =[2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030,2031, 2032, 2034]
+    this.memberData= 
+    {
+          first_name: '',
+          last_name:'',
+          reason:'', 
+          other:'',
+          payment_months:'',
+          amount : '',
+          payment_method: '',
+          invoice: '',
+          // todaydate = ''
+          received_by :this.authService.getLoggedInUserData()['name']
+      }
     
     
      this.dropdownList = 
      [
-                            {"id":1,"itemName":"January"},
-                            {"id":2,"itemName":"February"},
-                            {"id":3,"itemName":"March"},
-                            {"id":4,"itemName":"April"},
-                            {"id":5,"itemName":"May"},
-                            {"id":6,"itemName":"June"},
-                            {"id":7,"itemName":"July"},
-                            {"id":8,"itemName":"August"},
-                            {"id":9,"itemName":"September"},
-                            {"id":10,"itemName":"October"},
-                            {"id":11,"itemName":"November"},
-                            {"id":12,"itemName":"December"}
-                          ];
+        {"id":1,"itemName":"January"},
+        {"id":2,"itemName":"February"},
+        {"id":3,"itemName":"March"},
+        {"id":4,"itemName":"April"},
+        {"id":5,"itemName":"May"},
+        {"id":6,"itemName":"June"},
+        {"id":7,"itemName":"July"},
+        {"id":8,"itemName":"August"},
+        {"id":9,"itemName":"September"},
+        {"id":10,"itemName":"October"},
+        {"id":11,"itemName":"November"},
+        {"id":12,"itemName":"December"},
+        {"id":13,"itemName":2015},
+        {"id":14,"itemName":2016},
+        {"id":15,"itemName":2017},
+        {"id":16,"itemName":2018},
+        {"id":17,"itemName":2019},
+        {"id":18,"itemName":2020},
+        {"id":19,"itemName":2021},
+        {"id":20,"itemName":2022},
+        {"id":21,"itemName":2023},
+        {"id":22,"itemName":2024},
+        {"id":23,"itemName":2025},
+        {"id":24,"itemName":2026},
+        {"id":25,"itemName":2027},
+        {"id":26,"itemName":2028},
+        {"id":27,"itemName":2029},
+        {"id":28,"itemName":2030},
+
+      ];
     this.dropdownSettings = { 
       singleSelection: false, 
       text:"Select Members",
@@ -129,49 +148,4 @@ handleSubmit() {
   });
 }
 
-
-getDates() {
-  var date = new Date();
-  var currentYear = date.getFullYear();
-
-  //set values for year dropdown
-  for (var i = 0; i <= 100; i++) {
-    this.years.push(currentYear + i);
-  }
-
-  //set values for month dropdown
-  this.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 }
-
-
-
-
-
-// // onBlurMethod(){
-// //     alert(this.memberData.first_name);
-// //     alert(this.memberData.last_name);
-
-//     // call the APi to fatch the data ans make sure first and name exist
-//   }
-
-}
-
-// to bind the data
-// [(ngModel)]= 'memberData.first_name' #first_name = 'ngModel' 
-// export class MembersComponent implements OnInit {
-//   memberData:any;
-//   reason_array:any
-  
-//     constructor(private router:Router) { 
-//       this.reason_array = ['Donation', 'Members Fee', 'Collection'],
-//      this.memberData= {
-//           first_name: '',
-//           last_name:'',
-//           reason:'', 
-//           payment_months:'',
-//           amount : 0
-//           // this.date = ''
-//           // received_by :''
-//       }
-    
-//     }

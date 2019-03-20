@@ -4,7 +4,7 @@
     <div class="form-row">
 
       <div class="form-group col-md-6">
-        <label id="label" for="firstName">First Name</label>
+        <label id="label" for="firstName">Full Name</label>
         <!-- [ngClass]-is used when we apply the class based on condtion   -->
         <input class="form-control" 
         [ngClass]="{ 'is-invalid': first_name.invalid && first_name.dirty }"
@@ -14,7 +14,7 @@
             </div>
       </div>
   <div class="form-group col-md-6">
-    <label   id="label"  for="lastName">Last Name</label>
+    <label   id="label"  for="lastName">Spouses Name</label>
       <input class="form-control is"  
       [ngClass]="{ 'is-invalid': last_name.invalid && last_name.dirty }"
       [(ngModel)]="memberData.last_name" #last_name="ngModel" name = "lastName" id="lastName" placeholder="Enter Last Name" required>
@@ -23,17 +23,17 @@
       </div>
   </div>
 </div>
-
 <div class="form-group">
-  <label  for="reasonArray">Reason</label>
-    <select [(ngModel)]="memberData.reason" #reason="ngModel" name = "reason" class="form-control" id = "reason">
-      <option *ngFor="let abc of reason_array">{{abc}}</option>
-    </select>
-  <br>
-    <div *ngIf="memberData.reason === 'other'">
-      <input [(ngModel)]="memberData.other" #reason="ngModel" type="text"  name = "other" class="form-control" id="other" required placeholder="Please enter the reason(s).">
-    </div>
-</div>
+    <label  for="reasonArray">Reason</label>
+      <select [(ngModel)]="memberData.reason" #reason="ngModel" name = "reason" class="form-control" id = "reason">
+        <option *ngFor="let abc of reason_array">{{abc}}</option>
+      </select>
+    <br>
+      <div *ngIf="memberData.reason === 'other'">
+        <input [(ngModel)]="memberData.other" #reason="ngModel" type="text"  name = "other" class="form-control" id="other" required placeholder="Please enter the reason(s).">
+      </div>
+  </div>
+
 
 <div class="form-group">
     <label  for="payment_months">Payment Month(s)</label> 
@@ -46,18 +46,14 @@
         (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
     </div> 
 </div>
-<!-- <div> -->
-    <!-- <select name="month" formControlName="monthName">
-        <option *ngFor="let month of months" [ngValue]="month">
-          {{month}}
-        </option>
+<!-- <div class="form-group">
+    <label  for="yearArray">Year</label>
+      <select [(ngModel)]="memberData.payment_year" #payment_year="ngModel" name = "payment_year" class="form-control" id = "payment_year">
+        <option *ngFor="let abc of year_array">{{abc}}</option>
       </select>
-      <select name="year" formControlName="year">
-        <option *ngFor="let year of years" [ngValue]="year">
-          {{year}}
-        </option>
-    </select> -->
-<!-- </div> -->
+  
+  </div> -->
+
 
     <!-- **********************************************************
  [ngClass]="{ 'is-invalid': amount.invalid && amount.dirty }" --to decide when to show the message
@@ -127,11 +123,12 @@ novalidate #membersForm="ngForm"
             
           <thead>
               <tr>
-                  <th> First Name </th>
-                  <th> Last Name </th>
+                  <th> Full Name </th>
+                  <th> Spouses Name </th>
                   <th>Reason for Payment</th>
                   <th>Reason</th>
                   <th>Payment Month(s)</th>
+                  <!-- <th>Year</th> -->
                   <th>Amount</th>
                   <th>Payment Method</th>
                   <th>Invoice Number</th>
@@ -146,6 +143,7 @@ novalidate #membersForm="ngForm"
                     <td>{{memberData.reason}}</td>
                     <td>{{memberData.other}}</td>
                     <td>{{showPaymentMonths(memberData.payment_months)}}</td>
+                    <!-- <td>{{memberData.payment_year}}</td> -->
                     <td>{{memberData.amount}}</td> 
                     <td>{{memberData.payment_method}}</td> 
                     <td>{{memberData.invoice}}</td>
