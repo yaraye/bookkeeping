@@ -41,10 +41,10 @@ def verifyPasswords(password, dbpassword):
 
 # connection to mysql
 mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = 'ij91f0jukbae09xk'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'pk4xuinen7yv9lb9'
-app.config['MYSQL_DATABASE_DB'] = 'ht66ljw9uboq83ce'
-app.config['MYSQL_DATABASE_HOST'] = 'zj2x67aktl2o6q2n.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'Newlife7'
+app.config['MYSQL_DATABASE_DB'] = 'members'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 
@@ -206,6 +206,33 @@ def addMembers():
     #   return Response(json.dumps({"status": False, 'message': str(e)}), mimetype='application/json')
 
 
+
+@app.route('/createUser', methods=['GET'])
+def LoginUser():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT id, name, sex, birth, username, password from users")
+    returnData = []
+    data = cursor.fetchall()
+    for info in data:
+        userObject = {"id":info[0], "name": info[1], "sex": info[2], "birth": info[3], "username": info[4], "password": info[5]}
+        returnData.append(userObject)
+    # it has to be out of the loop
+    jsonResult = json.dumps(returnData, indent=4, sort_keys=True, default=str)
+    return Response(jsonResult, mimetype='application/json')
+
+@app.route('/remove/<string:id_data>', methods = ['GET'])
+def deleteUsers(id_data):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+  
+    cursor.execute("DELETE FROM users WHERE id=%s", (id_data,))
+    conn.commit()
+    return Response(json.dumps({"status": True}), mimetype='application/json')
+
+
+
 @app.route('/createUser', methods=['POST'])
 def createLoginUser():
     conn = mysql.connect()
@@ -225,12 +252,18 @@ def createLoginUser():
 
     if not password:
         return Response(json.dumps({"status": False, "message": "Password Required"}), mimetype='application/json')
+    
     try:
         # addtwo-->password = encryptPassword(password)
         password = encryptPassword(password)
         cursor.execute("INSERT INTO users (name, sex, birth, username, password) VALUE (%s,%s,%s,%s,%s)",
                        (name, sex, birth, username, password))
         conn.commit()
+        # if data_members.get('username'):
+        #     print 'A user already exists! Create another? (y/n):',
+        # create = raw_input()
+        # if create == 'n':
+        #     return
         return Response(json.dumps({"status": True}), mimetype='application/json')
     except Exception, e:
         return Response(json.dumps({"status": False, 'message': str(e)}), mimetype='application/json')
